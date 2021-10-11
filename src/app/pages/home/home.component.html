@@ -1,0 +1,106 @@
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container"></div>
+  </header>
+  <!-- loader -->
+  <div class="lds-roller" *ngIf="loading">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <!-- loader -->
+  <div class="section-heading" *ngIf="!loading">
+    <div class="promo">
+      <p class="promo-text">
+        Разоблачать ЧУЖИЕ заблуждения легко и приятно. «Эти невежды верят в
+        плоскую Землю, боятся ГМО и избегают черных кошек - как хорошо, что я не
+        такой! Я не то, что эта серая масса - я критически мыслю, я
+        образованный, эрудированный, прогрессивный…» А тем временем ментальные
+        вирусы ищут брешь в моём собственном иммунитете. Ирония - это хорошо, а
+        где же самоирония? Не слишком ли много внимания насмешкам над
+        заблуждающимися? Не пора ли взглянуть в зеркало? Вызвать собственные
+        предрассудки на смертельный поединок прямо здесь и прямо сейчас?
+        <br />
+        <br />
+        <b>Готов ли ты сразиться со своими мифами?</b>
+      </p>
+    </div>
+    <h2 class="section-title">Поиск</h2>
+    <label class="search">
+      <input
+        [(ngModel)]="searchStr"
+        type="text"
+        class="input input-search"
+        placeholder="Найти спикера"
+      />
+    </label>
+    <label class="search">
+      <select
+        (change)="changeFilter()"
+        class="favorites input input-search"
+        name=""
+        id=""
+        [(ngModel)]="selectValue"
+      >
+        <option value="all">Все</option>
+        <option value="favorites">Избранное</option>
+        <option value="mostpopular">Самые популярные</option>
+      </select>
+    </label>
+  </div>
+  <!-- main -->
+  <main class="main" *ngIf="!loading">
+    <div class="main-container">
+      <div class="cards-row">
+        <div class="cards" *ngFor="let speaker of speakers | search: searchStr">
+          <!-- CARDS -->
+          <div class="card">
+            <img src="{{ speaker.avatar }}" alt="image" class="card-image" />
+            <div class="card-text">
+              <div class="card-heading">
+                <h3 class="card-title">{{ speaker.name }}</h3>
+                <span class="card-tag tag">{{ speaker.profession }}</span>
+              </div>
+              <!-- /.card-heading -->
+              <div class="card-info">
+                <div class="rating">
+                  <img
+                    width="25px"
+                    src="http://pngwebicons.com/uploads/star/256/star_icon8817.png"
+                    alt=""
+                  />{{ speaker.rating }}
+                </div>
+                <div class="like" *ngIf="!speaker.favorite; else otherIcon">
+                  <button (click)="toggleFavorite(speaker)" class="button">
+                    <img
+                      width="45px"
+                      src="https://cdn.icon-icons.com/icons2/2336/PNG/512/like_star_favourite_thumbs_up_icon_142387.png"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #otherIcon>
+            <button (click)="toggleFavorite(speaker)" class="button">
+              <img
+                width="45px"
+                src="https://cdn.icon-icons.com/icons2/2337/PNG/512/thumbs_up_star_like_favourite_icon_142415.png"
+                alt=""
+              />
+            </button>
+          </ng-template>
+        </div>
+        <!-- //CARDS -->
+      </div>
+    </div>
+  </main>
+  <!-- //main -->
+</body>
